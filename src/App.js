@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import Progress from './components/progress.js'
 import Q from './components/q.js';
 import Answers from './components/answers.js'
+import { When } from './components/conditionals.js';
 
 function App(){
   const [currentQuestion, setQuestion] = useState(0);
@@ -110,15 +111,20 @@ function App(){
 
   const selectionHandler = e => {
     e.preventDefault();
-    setAnswer([...responses, e.target.value ]);
+    setAnswer([...responses, e.target.value]);
+
+  }
+
+  const incrementQuestion = () => {
+    setQuestion(currentQuestion + 1);
   }
 
 
   const question = questions[currentQuestion];
-
-  console.log('answer state', responses);
+  console.log('responses',responses);
   return( 
-    <div className="container">
+  <>
+    <When condition={currentQuestion < 7}>
       <Progress total='8' current={currentQuestion + 1}/>
       <Q question={question.question} />
 
@@ -127,8 +133,9 @@ function App(){
                id={question.id} 
                />
 
-      <button onClick={() => setQuestion(currentQuestion + 1) }> Next Question </button>
-    </div>
+      <button onClick={ incrementQuestion }> Next Question </button>
+    </When>
+  </>
   );
 }
 
