@@ -1,9 +1,10 @@
 import React from 'react';
 
 function A(props){
-  console.log(props.answer);
+
+
   return(
-    <button value={props.answer} >{props.answer}</button>
+    <button value={props.answer} onClick={props.handleClick} weight={props.weight} typeQ={props.typeQ}> {props.answer}</button>
   );
 };
 

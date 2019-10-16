@@ -1,11 +1,14 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Progress from './components/progress.js'
 import Q from './components/q.js';
 import Answers from './components/answers.js'
 
 function App(){
+  const [currentQuestion, setQuestion] = useState(0);
+  const [responses, setAnswer] = useState([]);
 
-  const questions = [
+
+  const questions =[
     {
       id: 1,
       question: 'Which type of coffee are you looking for?',
@@ -16,7 +19,7 @@ function App(){
         {d: 'Decaf'},
         {e: 'No-Preference'},
       ],
-      type: {type: 100}
+      type: ['type', 100]
       
     },
     {
@@ -28,7 +31,7 @@ function App(){
         {c: 'Spices'},
         {d: 'Sweetener'}
       ], 
-      type: {body: 20}
+      type: ['body', 20]
     },
     {
       id: 3,
@@ -38,7 +41,7 @@ function App(){
         {b: 'Juicy'},
         {c: 'Bold and Heavy'}
       ],
-      type: {body: 80}
+      type: ['body', 80]
     },
     {
       id: 4,
@@ -50,9 +53,9 @@ function App(){
         {d: '10-13'},
         {e: '14-16'}
       ],
-      type: {
-        frequency: 100
-      }
+      type: [
+        'frequency', 100
+      ]
     },
     {
       id: 5,
@@ -62,7 +65,7 @@ function App(){
         {b: 'Medium'},
         {c: 'Dark'}
       ],
-      type: {roast: 100}
+      type: ['roast', 100]
     },
     {
       id: 6,
@@ -77,16 +80,16 @@ function App(){
         {g: 'Sweet Tobacco'},
         {h: 'Dried Fruit'}
       ],
-      type: {flavor: 30}
+      type: ['flavor', 30]
     },
     {
-      id: 7, 
+      id: 7,  
       question: 'What kind of chocolate do you like best?',
       answers: [
         {a: 'Dark Chocolate'},
         {b: 'Milk Chocolate'}
       ],
-      type: {flavor: 30}
+      type: ['flavor', 30]
     },
     {
       id: 8,
@@ -99,19 +102,32 @@ function App(){
         {e: 'Grapes'},
         {f: 'Tropical & Exotic'}
       ],
-      type: {flavor: 40}
+      type: ['flavor', 40]
     }
     
      
   ]
 
-  const question = questions[0];
+  const selectionHandler = e => {
+    e.preventDefault();
+    setAnswer([...responses, e.target.value ]);
+  }
+
+
+  const question = questions[currentQuestion];
+
+  console.log('answer state', responses);
   return( 
     <div className="container">
-      <Progress total="8" current="1"/>
-      <Q question={question.question} /> 
-      <Answers answer={question} />
-      <button> Next Question </button>
+      <Progress total='8' current={currentQuestion + 1}/>
+      <Q question={question.question} />
+
+      <Answers answerOptions={question} 
+               answerHandler={selectionHandler} 
+               id={question.id} 
+               />
+
+      <button onClick={() => setQuestion(currentQuestion + 1) }> Next Question </button>
     </div>
   );
 }
