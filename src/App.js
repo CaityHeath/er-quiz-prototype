@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import Progress from './components/progress.js'
 import Q from './components/q.js';
 import Answers from './components/answers.js'
+import MatchProducts from './components/match.js'
 import { When } from './components/conditionals.js';
 
 function App(){
@@ -134,6 +135,9 @@ function App(){
                />
 
       <button onClick={ incrementQuestion }> Next Question </button>
+    </When>
+    <When condition={currentQuestion === 7}>
+      <MatchProducts answers={responses}/>
     </When>
   </>
   );
